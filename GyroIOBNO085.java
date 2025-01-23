@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.wpilibj.SerialPort;
-import frc.robot.Constants.GyroConstants;
 import org.littletonrobotics.junction.Logger;
 
 public class GyroIOBNO085 implements GyroIO {
@@ -16,7 +15,7 @@ public class GyroIOBNO085 implements GyroIO {
 
     /** Creates a new instance of GyroIOBNO085. */
     public GyroIOBNO085() {
-        serial = new SerialPort(GyroConstants.baudrate, SerialPort.Port.kOnboard);
+        serial = new SerialPort(115200, SerialPort.Port.kOnboard);
 
         serial.setReadBufferSize(17);
 
@@ -38,13 +37,13 @@ public class GyroIOBNO085 implements GyroIO {
                 buffer_16[i] = buffer_8[1 + (i * 2)] + (buffer_8[1 + (i * 2) + i] << 8);
             }
 
-            inputs.yaw = Degrees.of(buffer_16[0] * GyroConstants.DEGREE_SCALE);
-            inputs.pitch = Degrees.of(buffer_16[1] * GyroConstants.DEGREE_SCALE);
-            inputs.roll = Degrees.of(buffer_16[2] * GyroConstants.DEGREE_SCALE);
+            inputs.yaw = Degrees.of(buffer_16[0] * 0.01);
+            inputs.pitch = Degrees.of(buffer_16[1] * 0.01);
+            inputs.roll = Degrees.of(buffer_16[2] * 0.01);
 
-            inputs.x_accel = MetersPerSecondPerSecond.of(buffer_16[3] * GyroConstants.MILLI_G_TO_MS2);
-            inputs.y_accel = MetersPerSecondPerSecond.of(buffer_16[4] * GyroConstants.MILLI_G_TO_MS2);
-            inputs.z_accel = MetersPerSecondPerSecond.of(buffer_16[5] * GyroConstants.MILLI_G_TO_MS2);
+            inputs.x_accel = MetersPerSecondPerSecond.of(buffer_16[3] * 0.0098067);
+            inputs.y_accel = MetersPerSecondPerSecond.of(buffer_16[4] * 0.0098067);
+            inputs.z_accel = MetersPerSecondPerSecond.of(buffer_16[5] * 0.0098067);
         } else {
             System.out.println("Error reading data");
         }
