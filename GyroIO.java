@@ -3,7 +3,6 @@ package frc.robot.Subsystems.Gyro;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.LinearAcceleration;
-import org.littletonrobotics.junction.AutoLog;
 
 public interface GyroIO {
     /** Updates the values of the inputs defined in {@link GyroIOInputs}. */
