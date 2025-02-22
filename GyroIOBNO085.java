@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.Gyro;
+package frc.robot.subsystems.gyro;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.wpilibj.SerialPort;
-
 import org.littletonrobotics.junction.Logger;
 
 public class GyroIOBNO085 implements GyroIO {
