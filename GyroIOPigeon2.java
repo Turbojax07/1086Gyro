@@ -29,7 +29,7 @@ public class GyroIOPigeon2 implements GyroIO {
         inputs.y_accel = getYAcceleration();
         inputs.z_accel = getZAcceleration();
 
-        Logger.processInputs("Gyro_Pigeon2", inputs);
+        Logger.processInputs("/Subsystems/Gyro_Pigeon2", inputs);
     }
 
     @Override

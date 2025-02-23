@@ -80,7 +80,7 @@ public class GyroIOBNO085 implements GyroIO {
         inputs.z_accel = MetersPerSecondPerSecond.of(buffer_16[5] * MILLI_G_TO_MS2);
 
         // Logging the inputs
-        Logger.processInputs("Gyro_BNO085", inputs);
+        Logger.processInputs("/Subsystems/Gyro_BNO085", inputs);
     }
 
     @Override
