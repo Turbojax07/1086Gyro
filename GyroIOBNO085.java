@@ -11,9 +11,9 @@ import org.littletonrobotics.junction.Logger;
 public class GyroIOBNO085 implements GyroIO {
     private SerialPort serial;
 
-    public static final double MILLI_G_TO_MS2 = 0.0098067; // < Scalar to convert milli-gs to m/s^2
-    public static final double DEGREE_SCALE = 0.01;        // < To convert the degree values
-    public static final int BAUDRATE = 115200;             // < Baud rate of the serial connection
+    private static final double MILLI_G_TO_MS2 = 0.0098067; // Scalar to convert milli-gs to m/s^2
+    private static final double DEGREE_SCALE = 0.01;        // To convert the degree values
+    private static final int BAUDRATE = 115200;             // Baud rate of the serial connection
 
     private GyroIOInputsAutoLogged inputs;
 
@@ -80,7 +80,7 @@ public class GyroIOBNO085 implements GyroIO {
         inputs.z_accel = MetersPerSecondPerSecond.of(buffer_16[5] * MILLI_G_TO_MS2);
 
         // Logging the inputs
-        Logger.processInputs("/Subsystems/Gyro_BNO085", inputs);
+        Logger.processInputs("/RealOutputs/Subsystems/Gyro_BNO085", inputs);
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.ctre.phoenix6.hardware.Pigeon2;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.LinearAcceleration;
-import frc.robot.Constants.RobotMap;
 import org.littletonrobotics.junction.Logger;
 
 public class GyroIOPigeon2 implements GyroIO {
@@ -13,8 +12,8 @@ public class GyroIOPigeon2 implements GyroIO {
     private GyroIOInputsAutoLogged inputs;
 
     /** Creates a new instance of GyroIOPigeon2. */
-    public GyroIOPigeon2() {
-        gyro = new Pigeon2(RobotMap.GYRO_Pigeon2Id);
+    public GyroIOPigeon2(int id) {
+        gyro = new Pigeon2(id);
 
         inputs = new GyroIOInputsAutoLogged();
     }
@@ -29,7 +28,7 @@ public class GyroIOPigeon2 implements GyroIO {
         inputs.y_accel = getYAcceleration();
         inputs.z_accel = getZAcceleration();
 
-        Logger.processInputs("/Subsystems/Gyro_Pigeon2", inputs);
+        Logger.processInputs("/RealOutputs/Subsystems/Gyro_Pigeon2", inputs);
     }
 
     @Override

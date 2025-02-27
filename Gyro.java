@@ -16,7 +16,7 @@ public class Gyro extends SubsystemBase {
      * @return An instance of the {@link Gyro} class.
      */
     public static Gyro getInstance() {
-        if (instance == null) instance = new Gyro(new GyroIOPigeon2());
+        if (instance == null) instance = new Gyro(new GyroIOPigeon2(0));
 
         return instance;
     }
