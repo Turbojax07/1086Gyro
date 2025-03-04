@@ -12,10 +12,6 @@ public class Gyro extends SubsystemBase {
      * @param gyroIO The IO interface to use for this class.  It must implement {@link GyroIO}.
      */
     public Gyro(GyroIO gyroIO) {
-        if (instance != null) return;
-
-        instance = this;
-
         this.gyroIO = gyroIO;
     }
 
