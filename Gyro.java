@@ -6,21 +6,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Gyro extends SubsystemBase {
     private GyroIO gyroIO;
 
-    private static Gyro instance;
-
-    /**
-     * Gets a common instance of the {@link Gyro} subsystem.
-     * 
-     * If the Gyro subsystem has not been initialized, then it begins a simulation of the gyro.
-     * 
-     * @return An instance of the {@link Gyro} class.
-     */
-    public static Gyro getInstance() {
-        if (instance == null) instance = new Gyro(new GyroIOPigeon2(0));
-
-        return instance;
-    }
-
     /**
      * Creates a new instance of the Gyro class.
      * 
