@@ -4,7 +4,9 @@ import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.SerialPort;
 import org.littletonrobotics.junction.Logger;
 
@@ -16,6 +18,9 @@ public class GyroIOBNO085 implements GyroIO {
     private static final int BAUDRATE = 115200;             // Baud rate of the serial connection
 
     private GyroIOInputsAutoLogged inputs;
+    private GyroIOInputsAutoLogged previousInputs;
+
+    private Time previousTime;
 
     /** Creates a new instance of GyroIOBNO085. */
     public GyroIOBNO085() {
@@ -24,11 +29,15 @@ public class GyroIOBNO085 implements GyroIO {
         serial.setReadBufferSize(17);
 
         inputs = new GyroIOInputsAutoLogged();
+        previousInputs = new GyroIOInputsAutoLogged();
     }
 
 
     @Override
     public void updateInputs() {
+        previousInputs = inputs;
+        previousTime = Milliseconds.of(System.currentTimeMillis());
+
         // Not reading until I have all the data
         if (serial.getBytesReceived() < 19) {
             return;
@@ -75,6 +84,10 @@ public class GyroIOBNO085 implements GyroIO {
         inputs.pitch = Degrees.of(buffer_16[1] * DEGREE_SCALE);
         inputs.roll  = Degrees.of(buffer_16[2] * DEGREE_SCALE);
 
+        inputs.x_vel = getXVelocity();
+        inputs.y_vel = getYVelocity();
+        inputs.z_vel = getZVelocity();
+
         inputs.x_accel = MetersPerSecondPerSecond.of(buffer_16[3] * MILLI_G_TO_MS2);
         inputs.y_accel = MetersPerSecondPerSecond.of(buffer_16[4] * MILLI_G_TO_MS2);
         inputs.z_accel = MetersPerSecondPerSecond.of(buffer_16[5] * MILLI_G_TO_MS2);
@@ -101,6 +114,18 @@ public class GyroIOBNO085 implements GyroIO {
     @Override
     public Angle getYaw() {
         return inputs.yaw;
+    }
+
+    public AngularVelocity getXVelocity() {
+        return inputs.roll.minus(previousInputs.roll).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
+    }
+
+    public AngularVelocity getYVelocity() {
+        return inputs.pitch.minus(previousInputs.pitch).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
+    }
+
+    public AngularVelocity getZVelocity() {
+        return inputs.yaw.minus(previousInputs.yaw).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
     }
 
     @Override
