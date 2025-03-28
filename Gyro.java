@@ -69,4 +69,8 @@ public class Gyro extends SubsystemBase {
     public LinearAcceleration getZAcceleration() {
         return gyroIO.getZAcceleration();
     }
+
+    public void reset(){
+        gyroIO.resetGyro();
+    }
 }

@@ -38,6 +38,8 @@ public interface GyroIO {
     /** Gets the yaw of the robot as an {@link Angle}. */
     public Angle getYaw();
 
+    public void resetGyro();
+
 
     /** Gets the angular velocity on the x axis as an {@link AngularVelocity}. */
     public AngularVelocity getXVelocity();

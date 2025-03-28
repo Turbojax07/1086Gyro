@@ -23,6 +23,9 @@ public class GyroIOBNO085 implements GyroIO {
 
     private Time previousTime;
 
+    private double offset;
+
+
     /** Creates a new instance of GyroIOBNO085. */
     public GyroIOBNO085() {
         serial = new SerialPort(BAUDRATE, SerialPort.Port.kOnboard);
@@ -81,7 +84,7 @@ public class GyroIOBNO085 implements GyroIO {
         }
 
         // Loading values into the inputs
-        inputs.yaw   = Degrees.of(buffer_16[0] * DEGREE_SCALE);
+        inputs.yaw   = Degrees.of(buffer_16[0] * DEGREE_SCALE - offset);
         inputs.pitch = Degrees.of(buffer_16[1] * DEGREE_SCALE);
         inputs.roll  = Degrees.of(buffer_16[2] * DEGREE_SCALE);
 
@@ -145,5 +148,10 @@ public class GyroIOBNO085 implements GyroIO {
     @Override
     public LinearAcceleration getZAcceleration() {
         return inputs.z_accel;
+    }
+
+    @Override
+    public void resetGyro() {
+        offset += inputs.yaw.in(Degrees);
     }
 }

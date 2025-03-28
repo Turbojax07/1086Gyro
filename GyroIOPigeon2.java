@@ -9,6 +9,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearAcceleration;
+import edu.wpi.first.wpilibj2.command.Commands;
+
 import org.littletonrobotics.junction.Logger;
 
 public class GyroIOPigeon2 implements GyroIO {
@@ -25,15 +27,15 @@ public class GyroIOPigeon2 implements GyroIO {
         gyro.getConfigurator().apply(new Pigeon2Configuration());
 
         BaseStatusSignal.setUpdateFrequencyForAll(Hertz.of(100),
-            gyro.getRoll(),
-            gyro.getPitch(),
-            gyro.getYaw(),
-            gyro.getAngularVelocityXDevice(),
-            gyro.getAngularVelocityYDevice(),
-            gyro.getAngularVelocityZDevice(),
-            gyro.getAccelerationX(),
-            gyro.getAccelerationY(),
-            gyro.getAccelerationZ());
+                gyro.getRoll(),
+                gyro.getPitch(),
+                gyro.getYaw(),
+                gyro.getAngularVelocityXDevice(),
+                gyro.getAngularVelocityYDevice(),
+                gyro.getAngularVelocityZDevice(),
+                gyro.getAccelerationX(),
+                gyro.getAccelerationY(),
+                gyro.getAccelerationZ());
 
         gyro.optimizeBusUtilization();
     }
@@ -53,6 +55,11 @@ public class GyroIOPigeon2 implements GyroIO {
         inputs.z_accel = getZAcceleration();
 
         Logger.processInputs("/RealOutputs/Subsystems/Gyro_Pigeon2", inputs);
+    }
+
+    @Override
+    public void resetGyro() {
+        gyro.reset();
     }
 
     @Override
@@ -89,7 +96,6 @@ public class GyroIOPigeon2 implements GyroIO {
     public AngularVelocity getZVelocity() {
         return gyro.getAngularVelocityZDevice().getValue();
     }
-
 
     @Override
     public LinearAcceleration getXAcceleration() {
