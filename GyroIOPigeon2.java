@@ -9,8 +9,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearAcceleration;
-import edu.wpi.first.wpilibj2.command.Commands;
-
 import org.littletonrobotics.junction.Logger;
 
 public class GyroIOPigeon2 implements GyroIO {
