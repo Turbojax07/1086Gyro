@@ -1,5 +1,6 @@
 package frc.robot.subsystems.gyro;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearAcceleration;
@@ -22,6 +23,11 @@ public class Gyro extends SubsystemBase {
     @Override
     public void periodic() {
         gyroIO.updateInputs();
+    }
+
+    /** Gets the heading (yaw) of the robot as a {@link Rotation2d}. */
+    public Rotation2d getHeading() {
+        return gyroIO.getHeading();
     }
 
     /** Gets the roll of the robot as an {@link Angle}. */
@@ -76,6 +82,10 @@ public class Gyro extends SubsystemBase {
      */
     public LinearAcceleration getZAcceleration() {
         return gyroIO.getZAcceleration();
+    }
+
+    public boolean isConnected() {
+        return gyroIO.isConnected();
     }
 
     public void reset() {

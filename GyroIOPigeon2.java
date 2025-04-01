@@ -56,11 +56,6 @@ public class GyroIOPigeon2 implements GyroIO {
     }
 
     @Override
-    public void resetGyro() {
-        gyro.reset();
-    }
-
-    @Override
     public Rotation2d getHeading() {
         return gyro.getRotation2d();
     }
@@ -108,5 +103,15 @@ public class GyroIOPigeon2 implements GyroIO {
     @Override
     public LinearAcceleration getZAcceleration() {
         return gyro.getAccelerationZ().getValue();
+    }
+
+    @Override
+    public boolean isConnected() {
+        return gyro.isConnected();
+    }
+
+    @Override
+    public void resetGyro() {
+        gyro.reset();
     }
 }

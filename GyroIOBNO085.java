@@ -153,6 +153,11 @@ public class GyroIOBNO085 implements GyroIO {
     }
 
     @Override
+    public boolean isConnected() {
+        return true;
+    }
+
+    @Override
     public void resetGyro() {
         offset += inputs.yaw.in(Degrees);
     }

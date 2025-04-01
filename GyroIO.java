@@ -1,5 +1,7 @@
 package frc.robot.subsystems.gyro;
 
+import static edu.wpi.first.units.Units.*;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -9,17 +11,19 @@ import org.littletonrobotics.junction.AutoLog;
 public interface GyroIO {
     @AutoLog
     public class GyroIOInputs {
-        Angle roll;
-        Angle pitch;
-        Angle yaw;
+        Angle roll = Radians.zero();
+        Angle pitch = Radians.zero();
+        Angle yaw = Radians.zero();
 
-        AngularVelocity x_vel;
-        AngularVelocity y_vel;
-        AngularVelocity z_vel;
+        AngularVelocity x_vel = RadiansPerSecond.zero();
+        AngularVelocity y_vel = RadiansPerSecond.zero();
+        AngularVelocity z_vel = RadiansPerSecond.zero();
 
-        LinearAcceleration x_accel;
-        LinearAcceleration y_accel;
-        LinearAcceleration z_accel;
+        LinearAcceleration x_accel = MetersPerSecondPerSecond.zero();
+        LinearAcceleration y_accel = MetersPerSecondPerSecond.zero();
+        LinearAcceleration z_accel = MetersPerSecondPerSecond.zero();
+
+        boolean isConnected;
     }
 
     /** Updates the values of the inputs defined in {@link GyroIOInputs}. */
@@ -36,8 +40,6 @@ public interface GyroIO {
 
     /** Gets the yaw of the robot as an {@link Angle}. */
     public Angle getYaw();
-
-    public void resetGyro();
 
     /** Gets the angular velocity on the x axis as an {@link AngularVelocity}. */
     public AngularVelocity getXVelocity();
@@ -65,4 +67,8 @@ public interface GyroIO {
      * {@link LinearAcceleration}.
      */
     public LinearAcceleration getZAcceleration();
+
+    public boolean isConnected();
+
+    public void resetGyro();
 }
