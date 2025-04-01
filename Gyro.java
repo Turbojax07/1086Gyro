@@ -11,7 +11,8 @@ public class Gyro extends SubsystemBase {
     /**
      * Creates a new instance of the Gyro class.
      * 
-     * @param gyroIO The IO interface to use for this class.  It must implement {@link GyroIO}.
+     * @param gyroIO The IO interface to use for this class. It must implement
+     *               {@link GyroIO}.
      */
     public Gyro(GyroIO gyroIO) {
         this.gyroIO = gyroIO;
@@ -38,7 +39,6 @@ public class Gyro extends SubsystemBase {
         return gyroIO.getYaw();
     }
 
-
     /** Gets the angular velocity on the x axis as an {@link AngularVelocity}. */
     public AngularVelocity getXVelocity() {
         return gyroIO.getXVelocity();
@@ -48,29 +48,37 @@ public class Gyro extends SubsystemBase {
     public AngularVelocity getYVelocity() {
         return gyroIO.getYVelocity();
     }
-    
+
     /** Gets the angular velocity on the z axis as an {@link AngularVelocity}. */
     public AngularVelocity getZVelocity() {
         return gyroIO.getZVelocity();
     }
 
-
-    /** Gets the acceleration of the robot along the x axis as an {@link LinearAcceleration}. */
+    /**
+     * Gets the acceleration of the robot along the x axis as an
+     * {@link LinearAcceleration}.
+     */
     public LinearAcceleration getXAcceleration() {
         return gyroIO.getXAcceleration();
     }
 
-    /** Gets the acceleration of the robot along the y axis as an {@link LinearAcceleration}. */
+    /**
+     * Gets the acceleration of the robot along the y axis as an
+     * {@link LinearAcceleration}.
+     */
     public LinearAcceleration getYAcceleration() {
         return gyroIO.getYAcceleration();
     }
 
-    /** Gets the acceleration of the robot along the z axis as an {@link LinearAcceleration}. */
+    /**
+     * Gets the acceleration of the robot along the z axis as an
+     * {@link LinearAcceleration}.
+     */
     public LinearAcceleration getZAcceleration() {
         return gyroIO.getZAcceleration();
     }
 
-    public void reset(){
+    public void reset() {
         gyroIO.resetGyro();
     }
 }

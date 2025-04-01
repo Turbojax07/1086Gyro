@@ -13,10 +13,11 @@ import org.littletonrobotics.junction.Logger;
 public class GyroIOBNO085 implements GyroIO {
     private SerialPort serial;
 
-    // These would normally be put into a constants file, but since these will literally never change, they are just stored in here.
+    // These would normally be put into a constants file, but since these will
+    // literally never change, they are just stored in here.
     private static final double MILLI_G_TO_MS2 = 0.0098067; // Scalar to convert milli-gs to m/s^2
-    private static final double DEGREE_SCALE = 0.01;        // To convert the degree values
-    private static final int BAUDRATE = 115200;             // Baud rate of the serial connection
+    private static final double DEGREE_SCALE = 0.01; // To convert the degree values
+    private static final int BAUDRATE = 115200; // Baud rate of the serial connection
 
     private GyroIOInputsAutoLogged inputs;
     private GyroIOInputsAutoLogged previousInputs;
@@ -24,7 +25,6 @@ public class GyroIOBNO085 implements GyroIO {
     private Time previousTime;
 
     private double offset;
-
 
     /** Creates a new instance of GyroIOBNO085. */
     public GyroIOBNO085() {
@@ -35,7 +35,6 @@ public class GyroIOBNO085 implements GyroIO {
         inputs = new GyroIOInputsAutoLogged();
         previousInputs = new GyroIOInputsAutoLogged();
     }
-
 
     @Override
     public void updateInputs() {
@@ -84,9 +83,9 @@ public class GyroIOBNO085 implements GyroIO {
         }
 
         // Loading values into the inputs
-        inputs.yaw   = Degrees.of(buffer_16[0] * DEGREE_SCALE - offset);
+        inputs.yaw = Degrees.of(buffer_16[0] * DEGREE_SCALE - offset);
         inputs.pitch = Degrees.of(buffer_16[1] * DEGREE_SCALE);
-        inputs.roll  = Degrees.of(buffer_16[2] * DEGREE_SCALE);
+        inputs.roll = Degrees.of(buffer_16[2] * DEGREE_SCALE);
 
         inputs.x_vel = getXVelocity();
         inputs.y_vel = getYVelocity();
@@ -122,17 +121,20 @@ public class GyroIOBNO085 implements GyroIO {
 
     @Override
     public AngularVelocity getXVelocity() {
-        return inputs.roll.minus(previousInputs.roll).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
+        return inputs.roll.minus(previousInputs.roll)
+                .div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
     }
 
     @Override
     public AngularVelocity getYVelocity() {
-        return inputs.pitch.minus(previousInputs.pitch).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
+        return inputs.pitch.minus(previousInputs.pitch)
+                .div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
     }
 
     @Override
     public AngularVelocity getZVelocity() {
-        return inputs.yaw.minus(previousInputs.yaw).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
+        return inputs.yaw.minus(previousInputs.yaw)
+                .div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
     }
 
     @Override

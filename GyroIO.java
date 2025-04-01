@@ -28,7 +28,6 @@ public interface GyroIO {
     /** Gets the heading (yaw) of the robot as a {@link Rotation2d}. */
     public Rotation2d getHeading();
 
-
     /** Gets the roll of the robot as an {@link Angle}. */
     public Angle getRoll();
 
@@ -40,23 +39,30 @@ public interface GyroIO {
 
     public void resetGyro();
 
-
     /** Gets the angular velocity on the x axis as an {@link AngularVelocity}. */
     public AngularVelocity getXVelocity();
 
     /** Gets the angular velocity on the y axis as an {@link AngularVelocity}. */
     public AngularVelocity getYVelocity();
-    
+
     /** Gets the angular velocity on the z axis as an {@link AngularVelocity}. */
     public AngularVelocity getZVelocity();
 
-
-    /** Gets the acceleration of the robot along the x axis as an {@link LinearAcceleration}. */
+    /**
+     * Gets the acceleration of the robot along the x axis as an
+     * {@link LinearAcceleration}.
+     */
     public LinearAcceleration getXAcceleration();
 
-    /** Gets the acceleration of the robot along the y axis as an {@link LinearAcceleration}. */
+    /**
+     * Gets the acceleration of the robot along the y axis as an
+     * {@link LinearAcceleration}.
+     */
     public LinearAcceleration getYAcceleration();
 
-    /** Gets the acceleration of the robot along the z axis as an {@link LinearAcceleration}. */
+    /**
+     * Gets the acceleration of the robot along the z axis as an
+     * {@link LinearAcceleration}.
+     */
     public LinearAcceleration getZAcceleration();
 }
