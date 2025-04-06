@@ -2,13 +2,9 @@ package frc.robot.subsystems.gyro;
 
 import static edu.wpi.first.units.Units.*;
 
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.SerialPort;
-import org.littletonrobotics.junction.Logger;
 
 public class GyroIOBNO085 implements GyroIO {
     private SerialPort serial;
@@ -19,8 +15,7 @@ public class GyroIOBNO085 implements GyroIO {
     private static final double DEGREE_SCALE = 0.01; // To convert the degree values
     private static final int BAUDRATE = 115200; // Baud rate of the serial connection
 
-    private GyroIOInputsAutoLogged inputs;
-    private GyroIOInputsAutoLogged previousInputs;
+    private GyroIOInputs previousInputs;
 
     private Time previousTime;
 
@@ -32,13 +27,13 @@ public class GyroIOBNO085 implements GyroIO {
 
         serial.setReadBufferSize(17);
 
-        inputs = new GyroIOInputsAutoLogged();
         previousInputs = new GyroIOInputsAutoLogged();
     }
 
     @Override
-    public void updateInputs() {
+    public void updateInputs(GyroIOInputs inputs) {
         previousInputs = inputs;
+
         previousTime = Milliseconds.of(System.currentTimeMillis());
 
         // Not reading until I have all the data
@@ -87,78 +82,22 @@ public class GyroIOBNO085 implements GyroIO {
         inputs.pitch = Degrees.of(buffer_16[1] * DEGREE_SCALE);
         inputs.roll = Degrees.of(buffer_16[2] * DEGREE_SCALE);
 
-        inputs.x_vel = getXVelocity();
-        inputs.y_vel = getYVelocity();
-        inputs.z_vel = getZVelocity();
+        inputs.x_vel = inputs.pitch.minus(previousInputs.pitch).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
+        inputs.y_vel = inputs.roll.minus(previousInputs.roll).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
+        inputs.z_vel = inputs.yaw.minus(previousInputs.yaw).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
 
         inputs.x_accel = MetersPerSecondPerSecond.of(buffer_16[3] * MILLI_G_TO_MS2);
         inputs.y_accel = MetersPerSecondPerSecond.of(buffer_16[4] * MILLI_G_TO_MS2);
         inputs.z_accel = MetersPerSecondPerSecond.of(buffer_16[5] * MILLI_G_TO_MS2);
-
-        // Logging the inputs
-        Logger.processInputs("/RealOutputs/Subsystems/Gyro_BNO085", inputs);
-    }
-
-    @Override
-    public Rotation2d getHeading() {
-        return new Rotation2d(inputs.yaw);
-    }
-
-    @Override
-    public Angle getRoll() {
-        return inputs.roll;
-    }
-
-    @Override
-    public Angle getPitch() {
-        return inputs.pitch;
-    }
-
-    @Override
-    public Angle getYaw() {
-        return inputs.yaw;
-    }
-
-    @Override
-    public AngularVelocity getXVelocity() {
-        return inputs.roll.minus(previousInputs.roll)
-                .div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
-    }
-
-    @Override
-    public AngularVelocity getYVelocity() {
-        return inputs.pitch.minus(previousInputs.pitch)
-                .div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
-    }
-
-    @Override
-    public AngularVelocity getZVelocity() {
-        return inputs.yaw.minus(previousInputs.yaw)
-                .div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
-    }
-
-    @Override
-    public LinearAcceleration getXAcceleration() {
-        return inputs.x_accel;
-    }
-
-    @Override
-    public LinearAcceleration getYAcceleration() {
-        return inputs.y_accel;
-    }
-
-    @Override
-    public LinearAcceleration getZAcceleration() {
-        return inputs.z_accel;
-    }
-
-    @Override
-    public boolean isConnected() {
-        return true;
     }
 
     @Override
     public void resetGyro() {
-        offset += inputs.yaw.in(Degrees);
+        offset -= previousInputs.yaw.in(Degrees);
     }
+
+    @Override
+    public void resetGyro(Angle angle) {
+        offset -= previousInputs.yaw.minus(angle).in(Degrees);
+    }    
 }
