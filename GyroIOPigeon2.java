@@ -43,6 +43,8 @@ public class GyroIOPigeon2 implements GyroIO {
         inputs.x_accel = gyro.getAccelerationX().getValue();
         inputs.y_accel = gyro.getAccelerationY().getValue();
         inputs.z_accel = gyro.getAccelerationZ().getValue();
+
+        inputs.isConnected = gyro.isConnected();
     }
 
     @Override

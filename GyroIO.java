@@ -22,7 +22,7 @@ public interface GyroIO {
         LinearAcceleration y_accel = MetersPerSecondPerSecond.zero();
         LinearAcceleration z_accel = MetersPerSecondPerSecond.zero();
 
-        boolean isConnected;
+        boolean isConnected = false;
     }
 
     /** Updates the values of the inputs defined in {@link GyroIOInputs}. */

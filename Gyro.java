@@ -15,8 +15,7 @@ public class Gyro extends SubsystemBase {
     /**
      * Creates a new instance of the Gyro class.
      * 
-     * @param gyroIO The IO interface to use for this class. It must implement
-     *               {@link GyroIO}.
+     * @param gyroIO The IO interface to use for this class. It must implement {@link GyroIO}.
      */
     public Gyro(GyroIO gyroIO) {
         this.gyroIO = gyroIO;
@@ -66,35 +65,33 @@ public class Gyro extends SubsystemBase {
         return gyroInputs.z_vel;
     }
 
-    /**
-     * Gets the acceleration of the robot along the x axis as an
-     * {@link LinearAcceleration}.
-     */
+    /** Gets the acceleration of the robot along the x axis as an {@link LinearAcceleration}. */
     public LinearAcceleration getXAcceleration() {
         return gyroInputs.x_accel;
     }
 
-    /**
-     * Gets the acceleration of the robot along the y axis as an
-     * {@link LinearAcceleration}.
-     */
+    /** Gets the acceleration of the robot along the y axis as an {@link LinearAcceleration}. */
     public LinearAcceleration getYAcceleration() {
         return gyroInputs.y_accel;
     }
 
-    /**
-     * Gets the acceleration of the robot along the z axis as an
-     * {@link LinearAcceleration}.
-     */
+    /** Gets the acceleration of the robot along the z axis as an {@link LinearAcceleration}. */
     public LinearAcceleration getZAcceleration() {
         return gyroInputs.z_accel;
     }
 
+    /** Gets whether or not the gyro is connected. */
     public boolean isConnected() {
         return gyroInputs.isConnected;
     }
 
+    /** Resets the heading of the gyro to 0. */
     public void reset() {
         gyroIO.resetGyro();
+    }
+
+    /** Resets the heading of the gyro to the provided {@link Angle}. */
+    public void reset(Angle angle) {
+        gyroIO.resetGyro(angle);
     }
 }

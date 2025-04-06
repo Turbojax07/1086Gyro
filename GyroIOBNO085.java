@@ -3,7 +3,6 @@ package frc.robot.subsystems.gyro;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.SerialPort;
 
 public class GyroIOBNO085 implements GyroIO {
@@ -12,12 +11,10 @@ public class GyroIOBNO085 implements GyroIO {
     // These would normally be put into a constants file, but since these will
     // literally never change, they are just stored in here.
     private static final double MILLI_G_TO_MS2 = 0.0098067; // Scalar to convert milli-gs to m/s^2
-    private static final double DEGREE_SCALE = 0.01; // To convert the degree values
+    private static final double DEGREE_SCALE = 0.01; // Scalar to convert the degree values
     private static final int BAUDRATE = 115200; // Baud rate of the serial connection
 
     private GyroIOInputs previousInputs;
-
-    private Time previousTime;
 
     private double offset;
 
@@ -32,23 +29,26 @@ public class GyroIOBNO085 implements GyroIO {
 
     @Override
     public void updateInputs(GyroIOInputs inputs) {
-        previousInputs = inputs;
+        // If the data is corrupted or the serial interface isn't recieving data, then the gyro reports itself as not being connected.
 
-        previousTime = Milliseconds.of(System.currentTimeMillis());
+        previousInputs = inputs;
 
         // Not reading until I have all the data
         if (serial.getBytesReceived() < 19) {
+            inputs.isConnected = false;
             return;
         }
 
         // Checking first header byte
         if (serial.read(1)[0] != 0xAA) {
+            inputs.isConnected = false;
             System.out.println("Message did not start with 0xAAAA");
             return;
         }
 
         // Checking second header byte
         if (serial.read(1)[0] != 0xAA) {
+            inputs.isConnected = false;
             System.out.println("Message did not start with 0xAAAA");
             return;
         }
@@ -67,6 +67,7 @@ public class GyroIOBNO085 implements GyroIO {
 
         // Comparing checksum
         if (checksum != buffer_8[16]) {
+            inputs.isConnected = false;
             System.out.println("Invalid checksum!");
             return;
         }
@@ -82,13 +83,15 @@ public class GyroIOBNO085 implements GyroIO {
         inputs.pitch = Degrees.of(buffer_16[1] * DEGREE_SCALE);
         inputs.roll = Degrees.of(buffer_16[2] * DEGREE_SCALE);
 
-        inputs.x_vel = inputs.pitch.minus(previousInputs.pitch).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
-        inputs.y_vel = inputs.roll.minus(previousInputs.roll).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
-        inputs.z_vel = inputs.yaw.minus(previousInputs.yaw).div(Milliseconds.of(System.currentTimeMillis()).minus(previousTime));
+        inputs.x_vel = inputs.pitch.minus(previousInputs.pitch).div(Seconds.of(0.02));
+        inputs.y_vel = inputs.roll.minus(previousInputs.roll).div(Seconds.of(0.02));
+        inputs.z_vel = inputs.yaw.minus(previousInputs.yaw).div(Seconds.of(0.02));
 
         inputs.x_accel = MetersPerSecondPerSecond.of(buffer_16[3] * MILLI_G_TO_MS2);
         inputs.y_accel = MetersPerSecondPerSecond.of(buffer_16[4] * MILLI_G_TO_MS2);
         inputs.z_accel = MetersPerSecondPerSecond.of(buffer_16[5] * MILLI_G_TO_MS2);
+
+        inputs.isConnected = true;
     }
 
     @Override
