@@ -1,7 +1,5 @@
 package frc.robot.subsystems.gyro;
 
-import edu.wpi.first.units.measure.Angle;
-
 public class GyroIOSim implements GyroIO {
     /**
      * Creates a new instance of GyroIOSim.
@@ -18,5 +16,5 @@ public class GyroIOSim implements GyroIO {
     public void resetGyro() {}
 
     @Override
-    public void resetGyro(Angle angle) {}
+    public void resetGyro(double angle) {}
 }

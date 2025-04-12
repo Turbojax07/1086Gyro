@@ -1,26 +1,21 @@
 package frc.robot.subsystems.gyro;
 
-import static edu.wpi.first.units.Units.*;
-
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.LinearAcceleration;
 import org.littletonrobotics.junction.AutoLog;
 
 public interface GyroIO {
     @AutoLog
     public class GyroIOInputs {
-        Angle roll = Radians.zero();
-        Angle pitch = Radians.zero();
-        Angle yaw = Radians.zero();
+        double roll = 0; // Radians
+        double pitch = 0; // Radians
+        double yaw = 0; // Radians
 
-        AngularVelocity x_vel = RadiansPerSecond.zero();
-        AngularVelocity y_vel = RadiansPerSecond.zero();
-        AngularVelocity z_vel = RadiansPerSecond.zero();
+        double x_vel = 0; // Radians / Second
+        double y_vel = 0; // Radians / Second
+        double z_vel = 0; // Radians / Second
 
-        LinearAcceleration x_accel = MetersPerSecondPerSecond.zero();
-        LinearAcceleration y_accel = MetersPerSecondPerSecond.zero();
-        LinearAcceleration z_accel = MetersPerSecondPerSecond.zero();
+        double x_acc = 0; // Meters / Second^2
+        double y_acc = 0; // Meters / Second^2
+        double z_acc = 0; // Meters / Second^2
 
         boolean isConnected = false;
     }
@@ -31,6 +26,6 @@ public interface GyroIO {
     /** Resets the heading of the gyro to zero */
     public void resetGyro();
 
-    /** Resets the heading of the gyro to the provided {@link Angle} */
-    public void resetGyro(Angle angle);
+    /** Resets the heading of the gyro to the provided angle in radians. */
+    public void resetGyro(double angle);
 }

@@ -1,11 +1,8 @@
 package frc.robot.subsystems.gyro;
 
-import static edu.wpi.first.units.Units.Hertz;
-
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import edu.wpi.first.units.measure.Angle;
 
 public class GyroIOPigeon2 implements GyroIO {
     private Pigeon2 gyro;
@@ -16,7 +13,7 @@ public class GyroIOPigeon2 implements GyroIO {
 
         gyro.getConfigurator().apply(new Pigeon2Configuration());
 
-        BaseStatusSignal.setUpdateFrequencyForAll(Hertz.of(100),
+        BaseStatusSignal.setUpdateFrequencyForAll(100,
                 gyro.getRoll(),
                 gyro.getPitch(),
                 gyro.getYaw(),
@@ -32,17 +29,17 @@ public class GyroIOPigeon2 implements GyroIO {
 
     @Override
     public void updateInputs(GyroIOInputs inputs) {
-        inputs.roll = gyro.getRoll().getValue();
-        inputs.pitch = gyro.getPitch().getValue();
-        inputs.yaw = gyro.getYaw().getValue();
+        inputs.roll  = gyro.getRoll().getValueAsDouble()  * 2 * Math.PI;
+        inputs.pitch = gyro.getPitch().getValueAsDouble() * 2 * Math.PI;
+        inputs.yaw   = gyro.getYaw().getValueAsDouble()   * 2 * Math.PI;
 
-        inputs.x_vel = gyro.getAngularVelocityXDevice().getValue();
-        inputs.y_vel = gyro.getAngularVelocityYDevice().getValue();
-        inputs.z_vel = gyro.getAngularVelocityZDevice().getValue();
+        inputs.x_vel = gyro.getAngularVelocityXDevice().getValueAsDouble() * 2 * Math.PI;
+        inputs.y_vel = gyro.getAngularVelocityYDevice().getValueAsDouble() * 2 * Math.PI;
+        inputs.z_vel = gyro.getAngularVelocityZDevice().getValueAsDouble() * 2 * Math.PI;
 
-        inputs.x_accel = gyro.getAccelerationX().getValue();
-        inputs.y_accel = gyro.getAccelerationY().getValue();
-        inputs.z_accel = gyro.getAccelerationZ().getValue();
+        inputs.x_acc = gyro.getAccelerationX().getValueAsDouble() / 9.80665; // Converting Gs to mps^2
+        inputs.y_acc = gyro.getAccelerationY().getValueAsDouble() / 9.80665; // Converting Gs to mps^2
+        inputs.z_acc = gyro.getAccelerationZ().getValueAsDouble() / 9.80665; // Converting Gs to mps^2
 
         inputs.isConnected = gyro.isConnected();
     }
@@ -53,7 +50,7 @@ public class GyroIOPigeon2 implements GyroIO {
     }
 
     @Override
-    public void resetGyro(Angle angle) {
-        gyro.setYaw(angle);
+    public void resetGyro(double angle) {
+        gyro.setYaw(angle * Math.PI / 180);
     }
 }

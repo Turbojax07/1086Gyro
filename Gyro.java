@@ -1,12 +1,8 @@
 package frc.robot.subsystems.gyro;
 
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.Logger;
 
 public class Gyro extends SubsystemBase {
     private GyroIO gyroIO;
@@ -35,49 +31,49 @@ public class Gyro extends SubsystemBase {
         return new Rotation2d(gyroInputs.yaw);
     }
 
-    /** Gets the roll of the robot as an {@link Angle}. */
-    public Angle getRoll() {
+    /** Gets the roll of the robot in radians. */
+    public double getRoll() {
         return gyroInputs.roll;
     }
 
-    /** Gets the pitch of the robot as an {@link Angle}. */
-    public Angle getPitch() {
+    /** Gets the pitch of the robot in radians. */
+    public double getPitch() {
         return gyroInputs.pitch;
     }
 
-    /** Gets the yaw of the robot as an {@link Angle}. */
-    public Angle getYaw() {
+    /** Gets the yaw of the robot in radians. */
+    public double getYaw() {
         return gyroInputs.yaw;
     }
 
-    /** Gets the angular velocity on the x axis as an {@link AngularVelocity}. */
-    public AngularVelocity getXVelocity() {
+    /** Gets the angular velocity on the x axis in radians / second. */
+    public double getXVelocity() {
         return gyroInputs.x_vel;
     }
 
-    /** Gets the angular velocity on the y axis as an {@link AngularVelocity}. */
-    public AngularVelocity getYVelocity() {
+    /** Gets the angular velocity on the y axis in radians / second. */
+    public double getYVelocity() {
         return gyroInputs.y_vel;
     }
 
-    /** Gets the angular velocity on the z axis as an {@link AngularVelocity}. */
-    public AngularVelocity getZVelocity() {
+    /** Gets the angular velocity on the z axis in radians / second. */
+    public double getZVelocity() {
         return gyroInputs.z_vel;
     }
 
-    /** Gets the acceleration of the robot along the x axis as an {@link LinearAcceleration}. */
-    public LinearAcceleration getXAcceleration() {
-        return gyroInputs.x_accel;
+    /** Gets the acceleration of the robot along the x axis in meters / second^2. */
+    public double getXAcceleration() {
+        return gyroInputs.x_acc;
     }
 
-    /** Gets the acceleration of the robot along the y axis as an {@link LinearAcceleration}. */
-    public LinearAcceleration getYAcceleration() {
-        return gyroInputs.y_accel;
+    /** Gets the acceleration of the robot along the y axis in meters / second^2. */
+    public double getYAcceleration() {
+        return gyroInputs.y_acc;
     }
 
-    /** Gets the acceleration of the robot along the z axis as an {@link LinearAcceleration}. */
-    public LinearAcceleration getZAcceleration() {
-        return gyroInputs.z_accel;
+    /** Gets the acceleration of the robot along the z axis in meters / second^2. */
+    public double getZAcceleration() {
+        return gyroInputs.z_acc;
     }
 
     /** Gets whether or not the gyro is connected. */
@@ -90,8 +86,8 @@ public class Gyro extends SubsystemBase {
         gyroIO.resetGyro();
     }
 
-    /** Resets the heading of the gyro to the provided {@link Angle}. */
-    public void reset(Angle angle) {
+    /** Resets the heading of the gyro to the provided angle in radians. */
+    public void reset(double angle) {
         gyroIO.resetGyro(angle);
     }
 }
