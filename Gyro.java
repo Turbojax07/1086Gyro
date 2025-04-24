@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems.gyro;
 
 import org.littletonrobotics.junction.Logger;
@@ -14,7 +15,7 @@ public class Gyro extends SubsystemBase {
 
     /**
      * Creates a new instance of the Gyro class.
-     * 
+     *
      * @param gyroIO The IO interface to use for this class. It must implement {@link GyroIO}.
      */
     public Gyro(GyroIO gyroIO) {

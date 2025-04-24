@@ -1,3 +1,4 @@
+
 package frc.robot.subsystems.gyro;
 
 import static edu.wpi.first.units.Units.*;
@@ -96,5 +97,5 @@ public class GyroIOBNO085 implements GyroIO {
     @Override
     public void resetGyro(Angle angle) {
         offset -= previousInputs.yaw.minus(angle).in(Degrees);
-    }    
+    }
 }
