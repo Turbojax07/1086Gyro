@@ -1,4 +1,3 @@
-
 package frc.robot.subsystems.gyro;
 
 import static edu.wpi.first.units.Units.*;
@@ -24,7 +23,9 @@ public class GyroIOBNO085 implements GyroIO {
 
     @Override
     public void updateInputs(GyroIOInputs inputs) {
-        // If the data is corrupted or the serial interface isn't recieving data, then the gyro reports itself as not being connected.
+        // If the data is corrupted or the serial interface isn't recieving data, then the gyro
+        // reports
+        // itself as not being connected.
 
         previousInputs = inputs;
 
@@ -70,7 +71,10 @@ public class GyroIOBNO085 implements GyroIO {
         // De-endianing the data
         short[] buffer_16 = new short[6];
         for (int i = 0; i < 6; i++) {
-            buffer_16[i] = (short) ((buffer_8[1 + (i * 2)] & 0xFF) + ((buffer_8[2 + (i * 2)] & 0xFF) << 8));
+            buffer_16[i] =
+                    (short)
+                            ((buffer_8[1 + (i * 2)] & 0xFF)
+                                    + ((buffer_8[2 + (i * 2)] & 0xFF) << 8));
         }
 
         // Loading values into the inputs

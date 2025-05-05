@@ -1,4 +1,3 @@
-
 package frc.robot.subsystems.gyro;
 
 import static edu.wpi.first.units.Units.Hertz;
@@ -17,7 +16,8 @@ public class GyroIOPigeon2 implements GyroIO {
 
         gyro.getConfigurator().apply(new Pigeon2Configuration());
 
-        BaseStatusSignal.setUpdateFrequencyForAll(Hertz.of(100),
+        BaseStatusSignal.setUpdateFrequencyForAll(
+                Hertz.of(100),
                 gyro.getRoll(),
                 gyro.getPitch(),
                 gyro.getYaw(),

@@ -1,13 +1,11 @@
-
 package frc.robot.subsystems.gyro;
-
-import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.LinearAcceleration;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.Logger;
 
 public class Gyro extends SubsystemBase {
     private GyroIO gyroIO;
@@ -28,7 +26,6 @@ public class Gyro extends SubsystemBase {
     public void periodic() {
         gyroIO.updateInputs(gyroInputs);
         Logger.processInputs("/RealOutputs/Gyro", gyroInputs);
-
     }
 
     /** Gets the heading (yaw) of the robot as a {@link Rotation2d}. */
